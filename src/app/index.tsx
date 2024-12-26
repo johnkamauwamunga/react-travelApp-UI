@@ -1,47 +1,78 @@
 import { Link } from "expo-router";
 import React from "react";
-import { Text, View } from "react-native";
+import {
+  GestureHandlerRootView,
+  ScrollView,
+} from "react-native-gesture-handler";
+import { Text, View, Image, TouchableOpacity, TextInput } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
+import { LinearGradient } from "expo-linear-gradient";
+import { MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import Categories from "@/components/categories";
+import SortCategories from "@/components/sortCategories";
+import Destinations from "@/components/destinations";
 
 export default function Page() {
   return (
     <View className="flex flex-1">
-      <Header />
       <Content />
-      <Footer />
     </View>
   );
 }
 
 function Content() {
   return (
-    <View className="flex-1">
-      <View className="py-12 md:py-24 lg:py-32 xl:py-48">
-        <View className="px-4 md:px-6">
-          <View className="flex flex-col items-center gap-4 text-center">
-            <Text
-              role="heading"
-              className="text-3xl text-center native:text-5xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl"
-            >
-              Welcome to Project ACME
-            </Text>
-            <Text className="mx-auto max-w-[700px] text-lg text-center text-gray-500 md:text-xl dark:text-gray-400">
-              Discover and collaborate on acme. Explore our services now.
-            </Text>
+    <GestureHandlerRootView className="flex-1 bg-white">
+      <ScrollView showsHorizontalScrollIndicator={false} className="space-y-6">
+        {/* avatar */}
+        <View className="mx-5 flex-row justify-between items-center mb-10">
+          <Text
+            style={{ fontSize: wp(7) }}
+            className="font-bold text-neutral-700"
+          >
+            Let's Discover
+          </Text>
+          <TouchableOpacity>
+            <Image
+              source={require("../cars/cyberpower.webp")}
+              style={{ height: wp(12), width: wp(12) }}
+              className="rounded-full"
+            />
+          </TouchableOpacity>
+        </View>
 
-            <View className="gap-4">
-              <Link
-                suppressHighlighting
-                className="flex h-9 items-center justify-center overflow-hidden rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 web:shadow ios:shadow transition-colors hover:bg-gray-900/90 active:bg-gray-400/90 web:focus-visible:outline-none web:focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
-                href="/"
-              >
-                Explore
-              </Link>
-            </View>
+        {/* searchBar */}
+        <View className="mx-5 mb-4">
+          <View className="flex-row items-center bg-neutral-200 rounded-full p-1 space-x-2 pl-4">
+            <MagnifyingGlassIcon size={wp(6)} color="black" />
+            <TextInput
+              placeholder="Search for destinations"
+              className=""
+              // style={{ width: wp(80) }}
+            />
           </View>
         </View>
-      </View>
-    </View>
+
+        {/* categories */}
+        <View className="mb-4">
+          <Categories />
+        </View>
+
+        {/* assort categories */}
+        <View className="mb-4">
+          <SortCategories />
+        </View>
+
+        {/* destinations */}
+        <View>
+          <Destinations />
+        </View>
+      </ScrollView>
+    </GestureHandlerRootView>
   );
 }
 
